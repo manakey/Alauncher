@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Launcher</title>
+
+<style>
+/* =========================================================
+   THEME
+========================================================= */
+
+:root {
+    --bg: #f5f7fa;
+    --panel: rgba(255,255,255,0.75);
+    --card: rgba(255,255,255,0.9);
+    --text: #111827;
+    --subtext: #6b7280;
+    --border: rgba(0,0,0,0.08);
+    --accent: #2563eb;
+    --shadow: 0 10px 35px rgba(0,0,0,0.08);
+}
+
+body.dark {
+    --bg: #080b12;
+    --panel: rgba(15,19,29,0.75);
+    --card: rgba(20,25,37,0.9);
+    --text: #f3f4f6;
+    --subtext: #9ca3af;
+    --border: rgba(255,255,255,0.08);
+    --accent: #60a5fa;
+    --shadow: 0 10px 35px rgba(0,0,0,0.35);
+}
+
+
+/* =========================================================
+   BASIC
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(37,99,235,0.08),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--border);
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+button {
+    border: 1px solid var(--border);
+
+    background: var(--card);
+    color: var(--text);
+
+    border-radius: 12px;
+
+    padding: 10px 14px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        background 0.2s,
+        border 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+
+.icon-button {
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    width: min(1100px, 92%);
+    margin: 50px auto;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search {
+    width: 100%;
+
+    padding: 16px 20px;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+    color: var(--text);
+
+    outline: none;
+
+    font-size: 16px;
+
+    box-shadow: var(--shadow);
+
+    transition: border 0.2s;
+}
+
+.search:focus {
+    border-color: var(--accent);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.section-title {
+    margin: 38px 0 18px;
+
+    font-size: 14px;
+
+    color: var(--subtext);
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   SITE GRID
+========================================================= */
+
+.site-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   SITE CARD
+========================================================= */
+
+.site-card {
+    position: relative;
+
+    padding: 24px;
+
+    min-height: 150px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    box-shadow: var(--shadow);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        border 0.2s,
+        box-shadow 0.2s;
+}
+
+.site-card:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--accent);
+
+    box-shadow:
+        0 15px 45px rgba(37,99,235,0.12);
+}
+
+.site-icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 14px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(37,99,235,0.1);
+
+    font-size: 25px;
+}
+
+.site-name {
+    font-weight: 600;
+}
+
+.site-url {
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color: var(--subtext);
+
+    max-width: 150px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+    padding: 60px 20px;
+
+    text-align: center;
+
+    color: var(--subtext);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 0 16px;
+    }
+
+    main {
+        margin-top: 30px;
+    }
+
+    .site-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        Web<span>Launcher</span>
+    </div>
+
+    <div class="header-right">
+
+        <button
+            class="icon-button"
+            onclick="toggleTheme()"
+            id="themeButton">
+            ☾
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <input
+        id="search"
+        class="search"
+        type="text"
+        placeholder="サイトを検索..."
+        autocomplete="off"
+    >
+
+
+    <div class="section-title">
+        SITES
+    </div>
+
+    <div
+        id="siteGrid"
+        class="site-grid">
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   ★ SITE SETTINGS
+   =========================================================
+
+   ここを書き換えるだけでサイトを変更できます。
+
+   name  : 表示する名前
+   url   : 開くURL
+   icon  : 表示するアイコン
+
+   例：
+
+   {
+       name: "Google",
+       url: "https://www.google.com/",
+       icon: "🌐"
+   }
+
+========================================================= */
+
+const SITES = [
+
+    {
+        name: "Google",
+        url: "https://www.google.com/",
+        icon: "🌐"
+    },
+
+    {
+        name: "YouTube",
+        url: "https://www.youtube.com/",
+        icon: "▶"
+    },
+
+    {
+        name: "GitHub",
+        url: "https://github.com/",
+        icon: "◉"
+    },
+
+    {
+        name: "Scratch",
+        url: "https://scratch.mit.edu/",
+        icon: "🐱"
+    }
+
+];
+
+
+/* =========================================================
+   SITE DISPLAY
+========================================================= */
+
+const siteGrid = document.getElementById("siteGrid");
+const search = document.getElementById("search");
+
+
+function displaySites(keyword = "") {
+
+    siteGrid.innerHTML = "";
+
+    const filteredSites = SITES.filter(site => {
+
+        const text =
+            site.name.toLowerCase() +
+            " " +
+            site.url.toLowerCase();
+
+        return text.includes(
+            keyword.toLowerCase()
+        );
+
+    });
+
+
+    if (filteredSites.length === 0) {
+
+        siteGrid.innerHTML = `
+            <div class="empty">
+                サイトが見つかりません
+            </div>
+        `;
+
+        return;
+    }
+
+
+    filteredSites.forEach(site => {
+
+        const card = document.createElement("div");
+
+        card.className = "site-card";
+
+
+        card.innerHTML = `
+
+            <div class="site-icon">
+                ${site.icon}
+            </div>
+
+            <div class="site-name">
+                ${site.name}
+            </div>
+
+            <div class="site-url">
+                ${site.url}
+            </div>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                window.open(
+                    site.url,
+                    "_blank"
+                );
+
+            }
+        );
+
+
+        siteGrid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+search.addEventListener(
+    "input",
+    () => {
+
+        displaySites(
+            search.value
+        );
+
+    }
+);
+
+
+/* =========================================================
+   DARK / LIGHT MODE
+========================================================= */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+
+    localStorage.setItem(
+        "launcher-theme",
+        dark ? "dark" : "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton() {
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    document.getElementById(
+        "themeButton"
+    ).textContent = dark ? "☀" : "☾";
+
+}
+
+
+/* =========================================================
+   LOAD THEME
+========================================================= */
+
+const savedTheme =
+    localStorage.getItem(
+        "launcher-theme"
+    );
+
+
+if (savedTheme === "dark") {
+
+    document.body.classList.add("dark");
+
+}
+
+
+updateThemeButton();
+
+
+/* =========================================================
+   START
+========================================================= */
+
+displaySites();
+
+</script>
+
+</body>
+</html>
